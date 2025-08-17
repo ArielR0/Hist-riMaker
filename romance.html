@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HistóriMaker</title>
+    <link rel="icon" type="image/png" href="./images/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+   
+        body {
+            margin: 0;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(to bottom, #f9d5e5, #f7a1c4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 700px;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #4a1c40;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 80%;
+            max-width: 400px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff7eb9;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s, background 0.3s;
+            color: #fff;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #ff4da6;
+        }
+
+        .story-box {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: left;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-height: 450px;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            color: #333;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 182, 193, 0.7);
+            transform: rotate(45deg);
+            animation: float 7s linear infinite;
+            z-index: 0;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 182, 193, 0.7);
+            border-radius: 50%;
+        }
+
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { left: 10px; top: 0; }
+
+        .button-return {
+            background: #6a5acd;       
+            color: #fff;               
+            border: none;
+            border-radius: 12px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;       
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .button-return:hover {
+            background: #7b68ee;       
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity:1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity:0; }
+        }
+
+        .story-box.show {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerador de Histórias Românticas ✨</h1>
+
+      
+        <button class="button-return" onclick="window.location.href='index.html'">
+            Voltar para Histórias Fantásticas ✨
+        </button>
+
+        <input type="text" id="keywords" placeholder="Digite:Nome do parceiro/lugar">
+        <br>
+        <button onclick="generateRomanceStory()">Gerar História 💖</button>
+
+        <div class="story-box" id="story"></div>
+    </div>
+
+    <script>
+        
+        for(let i=0;i<30;i++){
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random()*100 + 'vw';
+            heart.style.animationDuration = (5+Math.random()*5)+'s';
+            heart.style.width = heart.style.height = (10+Math.random()*20)+'px';
+            document.body.appendChild(heart);
+        }
+
+        function generateRomanceStory() {
+            const input = document.getElementById("keywords").value;
+            if(!input) return alert("Digite o nome do herói e o parceiro/lugar! Ex: Jão, Maria");
+
+            const words = input.split(",").map(w => w.trim());
+            const hero = words[0] || "O herói";
+            const partner = words[1] || "uma pessoa especial";
+            const place = words[2] || "uma cidade encantadora";
+
+            let story = "";
+            const beginnings = [
+                `${hero} chegou em ${place} em uma tarde ensolarada, sentindo o coração bater ao avistar ${partner}.`,
+                `${hero} passeava por ${place} quando encontrou ${partner}, e algo mágico aconteceu.`
+            ];
+
+            const middles = [
+                `Juntos, ${hero} e ${partner} exploraram jardins encantados e segredos mágicos, compartilhando risos e olhares.`,
+                `Cada momento com ${partner} fazia ${hero} sentir alegria e emoção que nunca imaginou.`,
+                `Caminharam por ruas iluminadas, conversando sobre sonhos e desejos mais profundos.`
+            ];
+
+            const endings = [
+                `Ao final do dia, ${hero} percebeu que aquele encontro mudaria sua vida para sempre.`,
+                `O amor entre ${hero} e ${partner} brilhou como as luzes de ${place}, tornando o dia inesquecível.`
+            ];
+
+            for(let i=0;i<5;i++){
+                story += beginnings[Math.floor(Math.random()*beginnings.length)] + "\n\n";
+                story += middles[Math.floor(Math.random()*middles.length)] + "\n\n";
+                story += endings[Math.floor(Math.random()*endings.length)] + "\n\n";
+            }
+
+            const storyBox = document.getElementById("story");
+            storyBox.textContent = story.trim();
+            storyBox.classList.add("show");
+        }
+    </script>
+</body>
+</html>
